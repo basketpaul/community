@@ -18,7 +18,7 @@
                 <span class="icon-bar">second</span>
                 <span class="icon-bar">third</span>
             </button>
-            <a class="navbar-brand" href="#">My Community</a>
+            <a class="navbar-brand" href="#">翻片马社区</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <form class="navbar-form navbar-left">
@@ -28,16 +28,19 @@
                 <button type="submit" class="btn btn-default">Search</button>
             </form>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="https://github.com/login/oauth/authorize?client_id=39b225767a8f2f1e4362&http://localhost:8888/callback&scope=user&state=1">Login</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Me<span class="caret"></span></a>
+                <!--调试用<div th:text="${session.user}"></div>-->
+                <li class="dropdown" th:if="${session.user != null}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${session.user.getName()}"><span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Message</a></li>
-                        <li><a href="#">My thing</a></li>
-                        <li><a href="#">else</a></li>
+                        <li><a href="#">信息</a></li>
+                        <li><a href="#">设置</a></li>
+                        <li><a href="#">其他</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="#">Separated link</a></li>
                     </ul>
+                </li>
+                <li th:if="${session.user == null}">
+                    <a href="https://github.com/login/oauth/authorize?client_id=39b225767a8f2f1e4362&http://localhost:8888/callback&scope=user&state=1">登录</a>
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->
