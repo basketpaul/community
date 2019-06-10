@@ -2,6 +2,8 @@ package com.swaggyj.community.community.controller;
 
 import com.swaggyj.community.community.dto.AccessTokenDTO;
 import com.swaggyj.community.community.dto.GithubUser;
+import com.swaggyj.community.community.mapper.UserMapper;
+import com.swaggyj.community.community.model.User;
 import com.swaggyj.community.community.provider.GithubProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.UUID;
 
 @Controller
 public class AuthorizeCotroller {
@@ -23,6 +26,8 @@ public class AuthorizeCotroller {
     @Value("${github.redirect.url}")
     private String redirectUrl;
 
+    @Autowired
+    private UserMapper userMapper;
 
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code,
@@ -35,9 +40,16 @@ public class AuthorizeCotroller {
         accessTokenDTO.setRedirect_url(redirectUrl);
         accessTokenDTO.setState(state);
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
-        GithubUser user = githubProvider.getUser(accessToken);
-        if(user != null){
-            request.getSession().setAttribute("user",user);//将当前用户放进session
+        GithubUser githubUser = githubProvider.getUser(accessToken);
+        if(githubUser != null){
+            User user = new User();
+            user.setToken(UUID.randomUUID().toString());
+            user.setName(githubUser.getName());
+            user.setAccountId(String.valueOf(githubUser.getId()));
+            user.setGmtCreate(System.currentTimeMillis());
+            user.setGmtModified(user.getGmtModified());
+            userMapper.insert(user);
+            request.getSession().setAttribute("user",githubUser);//将当前用户放进session
             //登录成功，写cookie/session
             return "redirect:/";
         }else{
