@@ -20,9 +20,9 @@ public class GithubProvider {
                 .post(body)
                 .build();
         try (Response response = client.newCall(request).execute()) {
+            assert response.body() != null;
             String string = response.body().string();
-            String token = string.split("&")[0].split("=")[1];
-            return token;
+            return string.split("&")[0].split("=")[1];
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -37,10 +37,9 @@ public class GithubProvider {
 
         try {
             Response response = client.newCall(request).execute();
-            String string = response.body().string();
-            GithubUser githubUser = JSON.parseObject(string,GithubUser.class);
-            return githubUser;
-        } catch (IOException e) {
+            String string = response.body() != null ? response.body().string() : null;
+            return JSON.parseObject(string,GithubUser.class);
+        } catch (IOException ignored) {
 
         }
         return null;
