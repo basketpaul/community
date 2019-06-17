@@ -1,5 +1,8 @@
 package com.swaggyj.community.community.model;
 
+import lombok.Data;
+
+@Data
 public class Question {
     private Integer id;
     private String title;

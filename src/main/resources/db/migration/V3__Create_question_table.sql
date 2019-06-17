@@ -1,6 +1,6 @@
 CREATE TABLE question
 (
-    id int PRIMARY KEY,
+    id int AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(50),
     description TEXT,
     gmt_create BIGINT,
