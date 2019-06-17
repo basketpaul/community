@@ -5,6 +5,7 @@ import com.swaggyj.community.community.dto.GithubUser;
 import com.swaggyj.community.community.mapper.UserMapper;
 import com.swaggyj.community.community.model.User;
 import com.swaggyj.community.community.provider.GithubProvider;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 @Controller
+@Data
 public class AuthorizeCotroller {
     @Autowired
     private GithubProvider githubProvider;
@@ -50,6 +52,7 @@ public class AuthorizeCotroller {
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
+            user.setAvatarUrl(githubUser.getAvatar_url());
             userMapper.insert(user);
             response.addCookie((new Cookie("token",token)));
             return "redirect:/";
