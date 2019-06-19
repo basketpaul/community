@@ -15,3 +15,6 @@ IDEA
 git
 
 flyway
+
+lombok
+
