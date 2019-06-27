@@ -4,6 +4,7 @@ import com.swaggyj.community.community.dto.PaginationDTO;
 import com.swaggyj.community.community.dto.QuestionDTO;
 import com.swaggyj.community.community.exception.CustomizeErrorCode;
 import com.swaggyj.community.community.exception.CustomizeException;
+import com.swaggyj.community.community.mapper.QuestionExtMapper;
 import com.swaggyj.community.community.mapper.QuestionMapper;
 import com.swaggyj.community.community.mapper.UserMapper;
 import com.swaggyj.community.community.model.Question;
@@ -24,6 +25,9 @@ public class QuestionService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
 
     public PaginationDTO list(Integer page, Integer size) {
 
@@ -124,6 +128,9 @@ public class QuestionService {
         if (question.getId() == null) {
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
+            question.setViewCount(0);
+            question.setLikeCount(0);
+            question.setCommentCount(0);
             questionMapper.insert(question);
         } else {
             question.setGmtModified(question.getGmtCreate());
@@ -140,5 +147,12 @@ public class QuestionService {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
         }
+    }
+
+    public void incView(Integer id) {
+        Question question = new Question();
+        question.setId(id);
+        question.setViewCount(1);
+        questionExtMapper.incView(question);
     }
 }
