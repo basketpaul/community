@@ -40,7 +40,7 @@ body {
     margin: 50px;
 }
 
-.comment {
+.comments {
     margin: 10px 0px 10px 0px;
 }
 
@@ -48,3 +48,22 @@ body {
     float: right;
     margin: 10px;
 }
+
+.comment_sp {
+    margin-top: 0px;
+}
+
+.menu {
+    color: #999;
+}
+
+.menu .icon {
+    margin-right: 6px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.menu .icon:hover {
+    color: #499ef3;
+}
+

@@ -18,16 +18,20 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by codedrinker on 2019/5/7.
+ */
 @Service
 public class QuestionService {
+
     @Autowired
     private QuestionMapper questionMapper;
 
     @Autowired
-    private UserMapper userMapper;
+    private QuestionExtMapper questionExtMapper;
 
     @Autowired
-    private QuestionExtMapper questionExtMapper;
+    private UserMapper userMapper;
 
     public PaginationDTO list(Integer page, Integer size) {
 
@@ -55,6 +59,7 @@ public class QuestionService {
         Integer offset = size * (page - 1);
         List<Question> questions = questionMapper.selectByExampleWithRowbounds(new QuestionExample(), new RowBounds(offset, size));
         List<QuestionDTO> questionDTOList = new ArrayList<>();
+
         for (Question question : questions) {
             User user = userMapper.selectByPrimaryKey(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
@@ -126,6 +131,7 @@ public class QuestionService {
 
     public void createOrUpdate(Question question) {
         if (question.getId() == null) {
+            // 创建
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
             question.setViewCount(0);
@@ -133,7 +139,7 @@ public class QuestionService {
             question.setCommentCount(0);
             questionMapper.insert(question);
         } else {
-            question.setGmtModified(question.getGmtCreate());
+            // 更新
             Question updateQuestion = new Question();
             updateQuestion.setGmtModified(System.currentTimeMillis());
             updateQuestion.setTitle(question.getTitle());
@@ -142,8 +148,8 @@ public class QuestionService {
             QuestionExample example = new QuestionExample();
             example.createCriteria()
                     .andIdEqualTo(question.getId());
-            int update = questionMapper.updateByExampleSelective(updateQuestion, example);
-            if (update != 1) {
+            int updated = questionMapper.updateByExampleSelective(updateQuestion, example);
+            if (updated != 1) {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
         }

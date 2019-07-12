@@ -1,0 +1,39 @@
+CREATE TABLE USER
+(
+    ID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    ACCOUNT_ID VARCHAR(100),
+    NAME VARCHAR(50),
+    TOKEN VARCHAR(36),
+    GMT_CREATE BIGINT,
+    GMT_MODIFIED BIGINT,
+    BIO VARCHAR(256) NULL,
+    avatar_url VARCHAR(100) NULL
+);
+
+CREATE TABLE question
+(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(50),
+    description TEXT,
+    gmt_create BIGINT,
+    gmt_modified BIGINT,
+    creator BIGINT,
+    comment_count INT DEFAULT 0,
+    view_count INT DEFAULT 0,
+    like_count INT DEFAULT 0,
+    tag VARCHAR(256),
+    avatar_url VARCHAR(100) NULL
+);
+
+CREATE TABLE comment
+(
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  parent_id BIGINT NOT NULL,
+  type INT NOT NULL,
+  commentator BIGINT NOT NULL,
+  gmt_create BIGINT NOT NULL,
+  gmt_modified BIGINT NOT NULL,
+  like_count BIGINT DEFAULT 0,
+  content VARCHAR(1024) NULL
+);
+

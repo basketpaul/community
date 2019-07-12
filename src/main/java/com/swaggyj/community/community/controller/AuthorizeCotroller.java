@@ -52,6 +52,7 @@ public class AuthorizeCotroller {
             user.setName(githubUser.getName());
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setAvatarUrl(githubUser.getAvatarUrl());
+            user.setId(1L);
             userService.createOrUpdate(user);
             response.addCookie((new Cookie("token",token)));
             return "redirect:/";
