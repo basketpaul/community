@@ -37,3 +37,4 @@ CREATE TABLE comment
   content VARCHAR(1024) NULL
 );
 
+ALTER TABLE comment ADD comment_count INT DEFAULT 0;
