@@ -41,7 +41,7 @@ body {
 
 .question-related {
     line-height: 20px;
-    font-size: 20px;
+    font-size: 12px;
     margin-left: 0;
     list-style: none;
     padding-left: 0;
@@ -49,6 +49,16 @@ body {
 
 .question-wechat {
     width: 100%;
+}
+
+.publish-tag-tab {
+    display: none;
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
+.publish-tag-tab .label-info {
+    margin-right: 10px;
 }
 
 .community-menu {
