@@ -6,6 +6,7 @@ import com.swaggyj.community.community.model.User;
 import com.swaggyj.community.community.provider.GithubProvider;
 import com.swaggyj.community.community.service.UserService;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import java.util.UUID;
 
 @Controller
 @Data
+@Slf4j
 public class AuthorizeCotroller {
     @Autowired
     private GithubProvider githubProvider;
@@ -56,6 +58,7 @@ public class AuthorizeCotroller {
             response.addCookie((new Cookie("token",token)));
             return "redirect:/";
         }else{
+            log.error("callback get github error,{}", githubUser);
             //登陆失败，重新登录,暂时先跳回主页
             return "redirect:/";
         }
