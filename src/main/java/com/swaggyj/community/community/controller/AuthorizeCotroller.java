@@ -27,8 +27,8 @@ public class AuthorizeCotroller {
     private String clientId;
     @Value("${github.client.secret}")
     private String clientSecret;
-    @Value("${github.redirect.url}")
-    private String redirectUrl;
+    @Value("${github.redirect.uri}")
+    private String redirectUri;
 
     @Autowired
     private UserService userService;
@@ -41,7 +41,7 @@ public class AuthorizeCotroller {
         accessTokenDTO.setClient_id(clientId);
         accessTokenDTO.setClient_secret(clientSecret);
         accessTokenDTO.setCode(code);
-        accessTokenDTO.setRedirect_url(redirectUrl);
+        accessTokenDTO.setRedirect_uri(redirectUri);
         accessTokenDTO.setState(state);
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         GithubUser githubUser = githubProvider.getUser(accessToken);
@@ -52,7 +52,6 @@ public class AuthorizeCotroller {
             user.setName(githubUser.getName());
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setAvatarUrl(githubUser.getAvatarUrl());
-            user.setId(1L);
             userService.createOrUpdate(user);
             response.addCookie((new Cookie("token",token)));
             return "redirect:/";
