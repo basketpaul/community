@@ -38,3 +38,18 @@ CREATE TABLE comment
 );
 
 ALTER TABLE comment ADD comment_count INT DEFAULT 0;
+
+CREATE TABLE notification
+(
+    id bigint PRIMARY KEY AUTO_INCREMENT,
+    notifier bigint NOT NULL,
+    receiver bigint NOT NULL,
+    outerid bigint NOT NULL,
+    type int NOT NULL,
+    gmt_create bigint NOT NULL,
+    status int DEFAULT 0 NOT NULL
+);
+
+ALTER TABLE NOTIFICATION ADD NOTIFIER_NAME VARCHAR(100) NULL;
+ALTER TABLE NOTIFICATION ADD OUTER_TITLE VARCHAR(256) NULL;
+

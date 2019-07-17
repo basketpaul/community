@@ -45,5 +45,7 @@
                enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true"></table>
         <table tableName="comment" domainObjectName="Comment" enableSelectByPrimaryKey="true"
                enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true"></table>
+        <table tableName="notification" domainObjectName="Notification" enableSelectByPrimaryKey="true"
+               enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true"></table>
     </context>
 </generatorConfiguration>
